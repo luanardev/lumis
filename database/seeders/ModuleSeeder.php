@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Artisan;
 
-class DatabaseSeeder extends Seeder
+class ModuleSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -13,9 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            AdminSeeder::class,
-            ModuleSeeder::class
-        ]);
+        Artisan::call("module:install");
     }
 }
