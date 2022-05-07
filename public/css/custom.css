@@ -1,0 +1,16 @@
+/* put your own styles to customize and override the theme */
+
+.menu-item {
+    border-bottom: 1px solid #E8E8E8
+}
+
+.selected {
+    background-color: #346cb0;
+    color: #FFFFFF;
+    cursor: auto;
+}
+
+.display-none {
+    display: none;
+}
+
