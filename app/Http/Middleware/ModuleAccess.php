@@ -21,6 +21,10 @@ class ModuleAccess
     {
         $system = System::findByName($app);
 
+        if(empty($system)){
+            return back();
+        }
+
         if($system->disabled()){
             throw new DisabledModuleException;
         }
