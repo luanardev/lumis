@@ -28,20 +28,4 @@ class AlterPermissionsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        $tableNames = config('permission.table_names');
-        if (empty($tableNames)) {
-            throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
-        }
-        Schema::table($tableNames['permissions'], function (Blueprint $table) {
-            $table->dropColumn('display_name');
-            $table->dropColumn('system_id');
-        });
-    }
 }
