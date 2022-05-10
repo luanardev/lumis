@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
+use Luanardev\Modules\Employees\Concerns\WithEmployee;
 use Luanardev\Modules\Institution\Concerns\HasCampus;
 use Luanardev\Modules\Institution\Concerns\CampusPicker;
 use Spatie\Permission\Traits\HasRoles;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasApiTokens,
         HasFactory,
         HasCampus,
+        WithEmployee,
         CampusPicker,
         Notifiable,
         Loggable,
