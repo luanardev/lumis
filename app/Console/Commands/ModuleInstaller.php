@@ -135,9 +135,6 @@ class ModuleInstaller extends Command
         // module display name
         $displayName = $config['name'];
 
-        // module config flag
-        $configurable = $config['configurable'];
-
         // module permissions
         $permissions = $config['permissions'];
 
@@ -146,8 +143,7 @@ class ModuleInstaller extends Command
             'name'  => $module->getName(),
             'alias'  => $module->getLowerName(),
             'display_name'  => $displayName,
-            'url'   => '/'.$module->getLowerName(),
-            'configurable' => $configurable
+            'url'   => '/'.$module->getLowerName()
         ]);
     
         // check whether permissions exist

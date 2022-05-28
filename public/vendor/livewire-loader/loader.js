@@ -1,21 +1,23 @@
-let loaderElement = document.getElementById('laravel-livewire-loader');
+
+let loaderElement = $('#laravel-livewire-loader');
 let loaderTimeout = null;
 
-loaderElement.classList.add('hide');
+loaderElement.addClass('hide');
 
-Livewire.hook('message.sent', () => {
+Livewire.hook('message.sent', function(){
     if (loaderTimeout == null) {
-        loaderTimeout = setTimeout(() => {
-            loaderElement.classList.remove('hide');
-            loaderElement.classList.add('show');
-        }, parseInt(loaderElement.dataset.showDelay));
+        loaderTimeout = setTimeout(function() {
+            loaderElement.removeClass('hide');
+            loaderElement.addClass('show');
+        }, 1000);
     }
 });
 
-Livewire.hook('message.received', () => {
+Livewire.hook('message.received', function(){
+
     if (loaderTimeout != null) {
-        loaderElement.classList.remove('show');
-        loaderElement.classList.add('hide');
+        loaderElement.removeClass('show');
+        loaderElement.addClass('hide');
         clearTimeout(loaderTimeout);
         loaderTimeout = null;
     }

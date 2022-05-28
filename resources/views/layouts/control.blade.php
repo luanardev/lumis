@@ -1,7 +1,7 @@
 
 <aside class="control-sidebar control-sidebar-light">
-    <nav class="mt-2">
-		<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    
+		<ul class="nav nav-pills nav-sidebar flex-column" >
 			<li class="nav-item">
 				<a href="{{route('dashboard')}}" class="nav-link">
 					<i class="nav-icon fas fa-cubes"></i>
@@ -20,5 +20,5 @@
 				@endforeach
 			@endif
 		</ul>
-	</nav>
+	
 </aside>

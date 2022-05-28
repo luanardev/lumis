@@ -1,9 +1,38 @@
-@extends('adminlte::layouts.master')
+@extends('layouts.master')
 
-@section('sidebar')
-	@include('layouts.sidebar')
-@endsection
+@section('vendor_css')
+    @stack('css')
+    @yield('css')
+@stop
 
-@section('control')
-    @include('layouts.control')
-@endsection
+@section('body-class', 'hold-transition sidebar-mini layout-fixed')
+
+@section('body')
+    <div class="wrapper">
+
+        {{-- Top Navbar --}}
+        @include('partials.navbar')
+
+        {{-- Left Main Sidebar --}}
+        @include('partials.sidebar')
+
+        {{-- Content Wrapper --}}
+        @include('partials.content')
+
+        {{-- Footer --}}
+        @include('partials.footer')
+
+        {{-- Right Control Sidebar --}}
+        @include('partials.control')
+
+    </div>
+    @yield('components')
+@stop
+
+@section('vendor_js')
+    @stack('js')
+    @yield('js')
+@stop
+
+
+

@@ -1,4 +1,4 @@
-@extends('adminlte::layouts.master')
+@extends('layouts.master')
 
 @section('body-class', 'hold-transition layout-top-nav')
 
@@ -13,7 +13,7 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a href="{{route('dashboard')}}" class="h3">
-						@php $logo = OrgSettings::get('company_logo'); @endphp
+						@php $logo = Institution::get('company_logo'); @endphp
 						@if(!is_null($logo)  )   
 							<img src="{{ asset("storage/{$logo}") }}" class="img-fluid" style="height:50px" />
 						@else
@@ -95,8 +95,8 @@
 							<a href="{{url($app->url)}}" target="_blank">
 								<div class="card card-widget widget-user">									
 									<div class="widget-user-header">
-										<img class="img-circle" src="{{asset('assets/images/app.png')}}" width="50px" />										
-										<h6 class="widget-user-desc text-center">{{$app->display_name}}</h6>
+										<img class="img-circle" src="{{asset('img/app.png')}}" width="50px" />										
+										<p class="widget-user-desc text-center">{{$app->display_name}}</p>
 																			
 									</div>									
 								</div>
@@ -118,7 +118,7 @@
 	<aside class="control-sidebar control-sidebar-light">
         @include('layouts.control')
 	</aside>
-	@include('adminlte::partials.footer')
+	@include('partials.footer')
 
 </div>
 @endsection

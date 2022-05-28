@@ -23,7 +23,7 @@ class System extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name','alias','display_name','url','icon','status', 'configurable'];
+    protected $fillable = ['name','alias','display_name','url','icon','status'];
 
     /**
      * The attributes that are guarded.
@@ -150,7 +150,7 @@ class System extends Model
         return ( strtolower($this->status ) == strtolower('disabled'))? true:false;
     }
 
-     /**
+    /**
      * Check whether app is removable
      *
      * @return boolean

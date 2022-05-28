@@ -1,4 +1,4 @@
-@extends('adminlte::layouts.master')
+@extends('layouts.master')
 
 @section('body-class', 'hold-transition login-page')
 

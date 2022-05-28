@@ -23,7 +23,7 @@ class Role extends SpatieRole
     public function scopeSearch($query, $term)
     {
         return $query->where(
-            fn ($query) => $query->where('alias', '<>', self::DEAFULT)
+            fn ($query) => $query->where('alias', '<>', static::ADMIN)
                                 ->where('name', 'like', "%{$term}%")
         );
     }

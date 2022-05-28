@@ -8,17 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
-use Luanardev\Modules\Employees\Concerns\WithEmployee;
+use Luanardev\Modules\Employees\Concerns\WithStaff;
 use Luanardev\Modules\Institution\Concerns\HasCampus;
 use Luanardev\Modules\Institution\Concerns\CampusPicker;
 use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {
     use HasApiTokens,
         HasFactory,
         HasCampus,
-        WithEmployee,
+        WithStaff,
         CampusPicker,
         Notifiable,
         Loggable,
@@ -121,60 +122,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Get Apps allocated to User
-     *
-     * @return array
-     */
-    public function getApps()
-    {
-        if($this->hasRole(static::ADMIN)){
-            return System::all();
-        }
-        else{
-            return $this->assigned();   
-        }       
-    }
-
-    /**
-     * Check whether User has Apps allocated
-     * @return boolean
-     */
-    public function hasApps()
-    {
-        $apps = $this->getApps();
-        return ( count($apps) > 0) ? true:false;
-    }
-
-    /**
-     * Check whether User has an App allocated
-     *
-     * @param string $name Application name
-     * @return boolean
-     */
-    public function hasApp($name)
-    {
-        if($this->isAdmin()){
-            return true;
-        }
-
-        $apps = $this->assigned();
-        
-        foreach($apps as $app){
-            if( strtolower($app->name) == strtolower($name) ){
-                return true;                  
-            }
-        }  
-        return false;    
-    }
-
-    /**
      * Check whether User email exists
      *
      * @return boolean
      */
     public function emailTaken()
     {
-        $exists = User::where('email', $this->email)->exists();
+        $exists = static::where('email', $this->email)->exists();
         return ($exists)?true:false;
     }
 
@@ -232,6 +186,64 @@ class User extends Authenticatable
     }
 
     /**
+     * Search Scope for Laravel Livewire DataTable
+     * @var string $term
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public static function search($term)
+    {
+        return static::where('name', 'like', "%{$term}%")
+            ->orWhere('email', 'like', "%{$term}%");
+    }
+	
+	/**
+     * Get Apps allocated to User
+     *
+     * @return array
+     */
+    public function getApps()
+    {
+        if($this->hasRole(static::ADMIN)){
+            return System::all();
+        }
+        else{
+            return $this->assigned();   
+        }       
+    }
+
+    /**
+     * Check whether User has Apps allocated
+     * @return boolean
+     */
+    public function hasApps()
+    {
+        $apps = $this->getApps();
+        return ( count($apps) > 0) ? true:false;
+    }
+
+    /**
+     * Check whether User has an App allocated
+     *
+     * @param string $name Application name
+     * @return boolean
+     */
+    public function hasApp($name)
+    {
+        if($this->isAdmin()){
+            return true;
+        }
+
+        $apps = $this->assigned();
+        
+        foreach($apps as $app){
+            if( strtolower($app->name) == strtolower($name) ){
+                return true;                  
+            }
+        }  
+        return false;    
+    }
+
+    /**
      * Get assigned apps
      *
      * @return array
@@ -247,17 +259,6 @@ class User extends Authenticatable
             }
         }
         return $apps;
-    }
-
-    /**
-     * Search Scope for Laravel Livewire DataTable
-     * @var string $term
-     * @return Illuminate\Database\Eloquent\Builder
-     */
-    public static function search($term)
-    {
-        return static::where('name', 'like', "%{$term}%")
-            ->orWhere('email', 'like', "%{$term}%");
     }
 
     /**
@@ -309,17 +310,9 @@ class User extends Authenticatable
         if(empty($campus)){
             return static::query();        
         }else{
-            return static::findByCampus($campus->code);
+            return static::where('campus', $campus->code);
         }        
     }
 
-    /**
-     * Get Employees By Campus Code
-     * @return Illuminate\Database\Eloquent\Builder
-     */
-    public static function findByCampus($code)
-    {
-        return static::where('campus', $code);
-    }
     
 }

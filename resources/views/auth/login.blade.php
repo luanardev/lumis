@@ -1,10 +1,10 @@
-@extends('adminlte::layouts.master')
+@extends('layouts.master')
 
 @section('body-class', 'hold-transition login-page')
 
 @section('body')
 <div class="logo mb-3">
-  @php $logo = OrgSettings::get('company_logo'); @endphp
+  @php $logo = Institution::get('company_logo'); @endphp
 	@if(!is_null($logo)  )   
 	<img src="{{ asset("storage/{$logo}") }}" class="img-fluid" />
 	@endif
