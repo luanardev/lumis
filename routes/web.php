@@ -1,8 +1,7 @@
 <?php
 
+use App\Http\Controllers\Oauth\OauthController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +17,10 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/oauth/login', [OauthController::class, 'login'] )->name('oauth.login');
+Route::get('/oauth/callback', [OauthController::class, 'callback'] )->name('oauth.callback');
+Route::post('/oauth/logout', [OauthController::class, 'logout'])->name('oauth.logout');
 
 require __DIR__.'/auth.php';
 
