@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'laravelpassport' => [
+        'client_id' => env('OAUTH_CLIENT_ID'),
+        'client_secret' => env('OAUTH_CLIENT_SECRET'),
+        'redirect' => env('OAUTH_CALLBACK'),
+        'host' => env('OAUTH_HOST'),
+    ],
+
 ];
