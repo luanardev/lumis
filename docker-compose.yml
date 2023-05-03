@@ -1,0 +1,73 @@
+version: '4.2'
+
+services:
+
+    webapp:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${APP_PORT:-80}:80'
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        environment:
+            - APP_ENV=${APP_ENV}
+            - CONTAINER_ROLE=app
+        volumes:
+            - .:/var/www/html
+        networks:
+            - localhost
+        depends_on:
+            - mysql
+            - redis
+
+    mysql:
+        image: mysql:8.0
+        ports:
+            - '${DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - 'volume-mysql:/var/lib/mysql'
+        networks:
+            - localhost
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
+
+    redis:
+        image: redis:alpine
+        ports:
+            - '${REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'volume-redis:/data'
+        networks:
+            - localhost
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
+
+networks:
+    localhost:
+        driver: bridge
+
+volumes:
+    volume-mysql:
+        driver: local
+    volume-redis:
+        driver: local
